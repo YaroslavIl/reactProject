@@ -6,7 +6,6 @@ import Search from "./components/Search";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [productArr, setProductArr] = useState([]);
   const [state, setState] = useState(false);
   const [search, setSearch] = useState("");
   const [blockHide, setBlockHide] = useState(false);
@@ -17,7 +16,6 @@ function App() {
     fetch("https://dummyjson.com/products")
       .then((res) => res.json())
       .then((json) => {
-        setProductArr(json.products);
         setFilteredProducts(json.products);
         setFilteredProducts2(json.products);
       });
@@ -37,6 +35,7 @@ function App() {
     return item.title.toLowerCase().includes(search.toLowerCase());
   });
 
+  
 
   const togleImg = () => {
     setBlockHide(!blockHide);
@@ -128,16 +127,7 @@ function App() {
       </section>
       {/* <Search/> */}
       <section className="cardContainer container">
-        {filterSearch.map((obj) => (
-          <Card
-            key={obj.id}
-            brand={obj.brand}
-            category={obj.category}
-            price={obj.price}
-            title={obj.title}
-            images={obj.images}
-          />
-        ))}
+        <Card arr={filterSearch} />
       </section>
     </div>
   );
