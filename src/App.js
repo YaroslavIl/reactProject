@@ -1,20 +1,17 @@
 
-import './App.css';
-import React from 'react';
+import "./App.css";
+import React from "react";
 import Card from "./components/Card";
-import Search from "./components/Search"
-import { useState, useEffect } from 'react';
-
-
-
+import Search from "./components/Search";
+import { useState, useEffect } from "react";
 
 function App() {
-
-  const [productArr, setProductArr] = useState([])
+  const [productArr, setProductArr] = useState([]);
   const [state, setState] = useState(false);
   const [search, setSearch] = useState("");
-  const [blockHide, setBlockHide] = useState(false)
+  const [blockHide, setBlockHide] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts2, setFilteredProducts2] = useState([]);
 
   useEffect(() => {
     fetch("https://dummyjson.com/products")
@@ -22,45 +19,45 @@ function App() {
       .then((json) => {
         setProductArr(json.products);
         setFilteredProducts(json.products);
+        setFilteredProducts2(json.products);
       });
   }, []);
-  
+
   const sortPrice = () => {
-    let sortItem
+    let sortItem;
     if (state) {
-      sortItem = [...filteredProducts].sort((a, b) => b.price - a.price);
+      sortItem = [...filteredProducts2].sort((a, b) => b.price - a.price);
     } else {
-      sortItem = [...filteredProducts].sort((a, b) => a.price - b.price);
+      sortItem = [...filteredProducts2].sort((a, b) => a.price - b.price);
     }
-    setState(!state)
-    setFilteredProducts(sortItem);
-  }
-  const filterSearch = filteredProducts.filter((item) =>
-    item.title.toLowerCase().includes(search.toLowerCase())
-  );
+    setState(!state);
+    setFilteredProducts2(sortItem);
+  };
+  const filterSearch = filteredProducts2.filter((item) => {
+    return item.title.toLowerCase().includes(search.toLowerCase());
+  });
+
 
   const togleImg = () => {
-    setBlockHide(!blockHide)
-  }
-  
+    setBlockHide(!blockHide);
+  };
+
   const filterCategori = (category) => {
-    
-    if (category === 'All') {
-      setFilteredProducts(filteredProducts);
+    if (category === "All") {
+      setFilteredProducts2(filteredProducts);
     } else {
-      const filterProductsCategory = filteredProducts.filter(
-        (item) => item.category === category
-      );
+      const filterProductsCategory = filteredProducts.filter((item) => {
+        console.log(item.category);
+        return item.category === category;
+      });
       const sortedProducts = state
         ? filterProductsCategory.sort((a, b) => b.price - a.price)
         : filterProductsCategory.sort((a, b) => a.price - b.price);
-      setFilteredProducts(sortedProducts);
+      setFilteredProducts2(sortedProducts);
     }
   };
-  
-  
-  
-  
+
+
   return (
     <div className="main">
       <section className="searchBlock container">
@@ -87,45 +84,42 @@ function App() {
         </div>
         {blockHide && (
           <div className="filterPanel">
-            <span
-              className="categori"
-              onClick={ () => filterCategori("All")}
-            >
+            <span className="categori" onClick={() => filterCategori("All")}>
               All
             </span>
             <span
               className="categori"
-              onClick={ () => filterCategori("Laptops")}
+              onClick={() => filterCategori("laptops")}
             >
               Laptops
             </span>
             <span
               className="categori"
-              onClick={ () => filterCategori("Fragrances")}
+              onClick={() => filterCategori("fragrances")}
             >
               Fragrances
             </span>
             <span
               className="categori"
-              onClick={ () => filterCategori("Skincare")}
+              onClick={() => filterCategori("skincare")}
             >
               Skincare
             </span>
             <span
               className="categori"
-              onClick={ () => filterCategori("Groceries")}
+              onClick={() => filterCategori("groceries")}
             >
               Groceries
             </span>
             <span
               className="categori"
-              onClick={ () => filterCategori("Home-decoration")}
+              onClick={() => filterCategori("home-decoration")}
             >
               Home-decoration
             </span>
             <span
               className="categori"
-              onClick={ () => filterCategori("Smartphones")}
+              onClick={() => filterCategori("smartphones")}
             >
               Smartphones
             </span>
