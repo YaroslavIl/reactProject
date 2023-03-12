@@ -1,82 +1,59 @@
-import React from 'react';
+import React from "react";
 import { useState, useEffect } from "react";
 
 const Search = (props) => {
-   const [state, setState] = useState(false);
-   const [search, setSearch] = useState("");
-   const [blockHide, setBlockHide] = useState(false);
-   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [state, setState] = useState(false);
+  const [search, setSearch] = useState("");
+  const [blockHide, setBlockHide] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [filteredProducts2, setFilteredProducts2] = useState([]);
-  
 
-  const [childValue, setChildValue] = useState([]);
-  console.log(filteredProducts, '1');
-  console.log(filteredProducts2,'2');
-  console.log(childValue, "childValue");
+  // запит на дані
   useEffect(() => {
-     console.log('render===========================');
-     fetch("https://dummyjson.com/products")
-       .then((res) => res.json())
-       .then((json) => {
-         setFilteredProducts(json.products);
-         setFilteredProducts2(json.products);
-        //  setChildValue(json.products);
-       });
-   }, []);
-  
-  
+    fetch("https://dummyjson.com/products")
+      .then((res) => res.json())
+      .then((json) => {
+        setFilteredProducts(json.products);
+      });
+  }, []);
 
-   const sortPrice = () => {
-     let sortItem;
-     if (state) {
-       sortItem = [...filteredProducts2].sort((a, b) => b.price - a.price);
-     } else {
-       sortItem = [...filteredProducts2].sort((a, b) => a.price - b.price);
-     }
-     setState(!state);
-     setFilteredProducts2(sortItem);
-  };
-  console.log(filteredProducts2, "filterSearch");
-  const filterSearch = filteredProducts2.filter((item) => {
-     console.log(item);
-     return item.title.toLowerCase().includes(search.toLowerCase());
-  });
-  console.log(filterSearch, "filterSearch11111111");
-
-   const togleImg = () => {
-     setBlockHide(!blockHide);
-   };
-
-   const filterCategori = (category) => {
-     if (category === "All") {
-       setFilteredProducts2(filteredProducts);
-     } else {
-       const filterProductsCategory = filteredProducts.filter((item) => {
-         console.log(item.category);
-         return item.category === category;
-       });
-       const sortedProducts = state
-         ? filterProductsCategory.sort((a, b) => b.price - a.price)
-         : filterProductsCategory.sort((a, b) => a.price - b.price);
-       setFilteredProducts2(sortedProducts);
-     }
-  };
-  
-  
+  // запис даних які отримали в новий масив з яким будемо працювати
   useEffect(() => {
-    console.log(filteredProducts, "filteredProducts");
-    console.log(filteredProducts2, "filteredProducts2");
     setFilteredProducts2(filteredProducts);
-    console.log(filteredProducts, "filteredProducts");
-    console.log(filteredProducts2, "filteredProducts2");
-    props.childData(filterSearch);
-  }, [filteredProducts2]);
-  
-  
-  
-  // const a = () => {
-  //   props.childData(childValue);
-  // };
+  }, [filteredProducts]);
+
+  const sortPrice = () => {
+    let sortItem;
+    if (state) {
+      sortItem = [...filteredProducts2].sort((a, b) => b.price - a.price);
+    } else {
+      sortItem = [...filteredProducts2].sort((a, b) => a.price - b.price);
+    }
+    setState(!state);
+    setFilteredProducts2(sortItem);
+  };
+
+  const togleImg = () => {
+    setBlockHide(!blockHide);
+  };
+
+  const filterCategori = (category) => {
+    if (category === "All") {
+      setFilteredProducts2(filteredProducts);
+    } else {
+      const filterProductsCategory = filteredProducts.filter((item) => {
+        console.log(item.category);
+        return item.category === category;
+      });
+      const sortedProducts = state
+        ? filterProductsCategory.sort((a, b) => b.price - a.price)
+        : filterProductsCategory.sort((a, b) => a.price - b.price);
+      setFilteredProducts2(sortedProducts);
+    }
+  };
+
+  // функція яка забере посортований масив по ціні або категорія та може передати текст для пошуку
+  props.childData(filteredProducts2, search);
 
   return (
     <section className="searchBlock container">
@@ -139,7 +116,6 @@ const Search = (props) => {
         </div>
       )}
     </section>
-    
   );
 };
 
