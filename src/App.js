@@ -6,60 +6,69 @@ import Search from "./components/Search";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [state, setState] = useState(false);
-  const [search, setSearch] = useState("");
-  const [blockHide, setBlockHide] = useState(false);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [filteredProducts2, setFilteredProducts2] = useState([]);
 
-  useEffect(() => {
-    fetch("https://dummyjson.com/products")
-      .then((res) => res.json())
-      .then((json) => {
-        setFilteredProducts(json.products);
-        setFilteredProducts2(json.products);
-      });
-  }, []);
+  const [mainArr, setMainArr] = useState([])
+  const childrenCompSearch = (data) => {
+      console.log(data, "500");
+   setMainArr(data)
+  }
+ 
+  
+ 
+  // const [state, setState] = useState(false);
+  // const [search, setSearch] = useState("");
+  // const [blockHide, setBlockHide] = useState(false);
+  // const [filteredProducts, setFilteredProducts] = useState([]);
+  // const [filteredProducts2, setFilteredProducts2] = useState([]);
 
-  const sortPrice = () => {
-    let sortItem;
-    if (state) {
-      sortItem = [...filteredProducts2].sort((a, b) => b.price - a.price);
-    } else {
-      sortItem = [...filteredProducts2].sort((a, b) => a.price - b.price);
-    }
-    setState(!state);
-    setFilteredProducts2(sortItem);
-  };
-  const filterSearch = filteredProducts2.filter((item) => {
-    return item.title.toLowerCase().includes(search.toLowerCase());
-  });
+  // useEffect(() => {
+  //   fetch("https://dummyjson.com/products")
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       setFilteredProducts(json.products);
+  //       setFilteredProducts2(json.products);
+  //     });
+  // }, []);
+
+  // const sortPrice = () => {
+  //   let sortItem;
+  //   if (state) {
+  //     sortItem = [...filteredProducts2].sort((a, b) => b.price - a.price);
+  //   } else {
+  //     sortItem = [...filteredProducts2].sort((a, b) => a.price - b.price);
+  //   }
+  //   setState(!state);
+  //   setFilteredProducts2(sortItem);
+  // };
+  // const filterSearch = filteredProducts2.filter((item) => {
+  //   return item.title.toLowerCase().includes(search.toLowerCase());
+  // });
 
   
 
-  const togleImg = () => {
-    setBlockHide(!blockHide);
-  };
+  // const togleImg = () => {
+  //   setBlockHide(!blockHide);
+  // };
 
-  const filterCategori = (category) => {
-    if (category === "All") {
-      setFilteredProducts2(filteredProducts);
-    } else {
-      const filterProductsCategory = filteredProducts.filter((item) => {
-        console.log(item.category);
-        return item.category === category;
-      });
-      const sortedProducts = state
-        ? filterProductsCategory.sort((a, b) => b.price - a.price)
-        : filterProductsCategory.sort((a, b) => a.price - b.price);
-      setFilteredProducts2(sortedProducts);
-    }
-  };
+  // const filterCategori = (category) => {
+  //   if (category === "All") {
+  //     setFilteredProducts2(filteredProducts);
+  //   } else {
+  //     const filterProductsCategory = filteredProducts.filter((item) => {
+  //       console.log(item.category);
+  //       return item.category === category;
+  //     });
+  //     const sortedProducts = state
+  //       ? filterProductsCategory.sort((a, b) => b.price - a.price)
+  //       : filterProductsCategory.sort((a, b) => a.price - b.price);
+  //     setFilteredProducts2(sortedProducts);
+  //   }
+  // };
 
 
   return (
     <div className="main">
-      <section className="searchBlock container">
+      {/* <section className="searchBlock container">
         <div className="blockElem flex">
           <div className="filter flex">
             <img onClick={togleImg} src="./img/filtr.png" alt="filtr" />
@@ -124,10 +133,10 @@ function App() {
             </span>
           </div>
         )}
-      </section>
-      {/* <Search/> */}
+      </section> */}
+      <Search childData={childrenCompSearch} />
       <section className="cardContainer container">
-        <Card arr={filterSearch} />
+        <Card arr={mainArr} />
       </section>
     </div>
   );

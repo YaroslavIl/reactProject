@@ -1,50 +1,82 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 
-const Search = () => {
-  const [productArr, setProductArr] = useState([]);
-  const [state, setState] = useState(false);
-  const [search, setSearch] = useState("");
-  const [blockHide, setBlockHide] = useState(false);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+const Search = (props) => {
+   const [state, setState] = useState(false);
+   const [search, setSearch] = useState("");
+   const [blockHide, setBlockHide] = useState(false);
+   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts2, setFilteredProducts2] = useState([]);
+  
 
+  const [childValue, setChildValue] = useState([]);
+  console.log(filteredProducts, '1');
+  console.log(filteredProducts2,'2');
+  console.log(childValue, "childValue");
   useEffect(() => {
-    fetch("https://dummyjson.com/products")
-      .then((res) => res.json())
-      .then((json) => {
-        setProductArr(json.products);
-        setFilteredProducts(json.products);
-      });
-  }, []);
+     console.log('render===========================');
+     fetch("https://dummyjson.com/products")
+       .then((res) => res.json())
+       .then((json) => {
+         setFilteredProducts(json.products);
+         setFilteredProducts2(json.products);
+        //  setChildValue(json.products);
+       });
+   }, []);
+  
+  
 
-  const sortPrice = () => {
-    let sortItem;
-    if (state) {
-      sortItem = [...filteredProducts].sort((a, b) => b.price - a.price);
-    } else {
-      sortItem = [...filteredProducts].sort((a, b) => a.price - b.price);
-    }
-    setState(!state);
-    setFilteredProducts(sortItem);
+   const sortPrice = () => {
+     let sortItem;
+     if (state) {
+       sortItem = [...filteredProducts2].sort((a, b) => b.price - a.price);
+     } else {
+       sortItem = [...filteredProducts2].sort((a, b) => a.price - b.price);
+     }
+     setState(!state);
+     setFilteredProducts2(sortItem);
   };
+  console.log(filteredProducts2, "filterSearch");
+  const filterSearch = filteredProducts2.filter((item) => {
+     console.log(item);
+     return item.title.toLowerCase().includes(search.toLowerCase());
+  });
+  console.log(filterSearch, "filterSearch11111111");
 
-  const togleImg = () => {
-    setBlockHide(!blockHide);
-  };
+   const togleImg = () => {
+     setBlockHide(!blockHide);
+   };
 
-  const filterCategori = (category) => {
-    if (category === "All") {
-      setFilteredProducts(filteredProducts);
-    } else {
-      const filterProductsCategory = filteredProducts.filter(
-        (item) => item.category === category
-      );
-      const sortedProducts = state
-        ? filterProductsCategory.sort((a, b) => b.price - a.price)
-        : filterProductsCategory.sort((a, b) => a.price - b.price);
-      setFilteredProducts(sortedProducts);
-    }
+   const filterCategori = (category) => {
+     if (category === "All") {
+       setFilteredProducts2(filteredProducts);
+     } else {
+       const filterProductsCategory = filteredProducts.filter((item) => {
+         console.log(item.category);
+         return item.category === category;
+       });
+       const sortedProducts = state
+         ? filterProductsCategory.sort((a, b) => b.price - a.price)
+         : filterProductsCategory.sort((a, b) => a.price - b.price);
+       setFilteredProducts2(sortedProducts);
+     }
   };
+  
+  
+  useEffect(() => {
+    console.log(filteredProducts, "filteredProducts");
+    console.log(filteredProducts2, "filteredProducts2");
+    setFilteredProducts2(filteredProducts);
+    console.log(filteredProducts, "filteredProducts");
+    console.log(filteredProducts2, "filteredProducts2");
+    props.childData(filterSearch);
+  }, [filteredProducts2]);
+  
+  
+  
+  // const a = () => {
+  //   props.childData(childValue);
+  // };
 
   return (
     <section className="searchBlock container">
@@ -74,39 +106,40 @@ const Search = () => {
           <span className="categori" onClick={() => filterCategori("All")}>
             All
           </span>
-          <span className="categori" onClick={() => filterCategori("Laptops")}>
+          <span className="categori" onClick={() => filterCategori("laptops")}>
             Laptops
           </span>
           <span
             className="categori"
-            onClick={() => filterCategori("Fragrances")}
+            onClick={() => filterCategori("fragrances")}
           >
             Fragrances
           </span>
-          <span className="categori" onClick={() => filterCategori("Skincare")}>
+          <span className="categori" onClick={() => filterCategori("skincare")}>
             Skincare
           </span>
           <span
             className="categori"
-            onClick={() => filterCategori("Groceries")}
+            onClick={() => filterCategori("groceries")}
           >
             Groceries
           </span>
           <span
             className="categori"
-            onClick={() => filterCategori("Home-decoration")}
+            onClick={() => filterCategori("home-decoration")}
           >
             Home-decoration
           </span>
           <span
             className="categori"
-            onClick={() => filterCategori("Smartphones")}
+            onClick={() => filterCategori("smartphones")}
           >
             Smartphones
           </span>
         </div>
       )}
     </section>
+    
   );
 };
 
