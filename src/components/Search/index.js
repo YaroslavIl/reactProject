@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import styles from './Search.module.css'
 
 const Search = (props) => {
   const [state, setState] = useState(false);
@@ -22,6 +23,7 @@ const Search = (props) => {
     setFilteredProducts2(filteredProducts);
   }, [filteredProducts]);
 
+  // функція сортування ціни
   const sortPrice = () => {
     let sortItem;
     if (state) {
@@ -32,11 +34,11 @@ const Search = (props) => {
     setState(!state);
     setFilteredProducts2(sortItem);
   };
-
+// функція відображення блоку категорій
   const togleImg = () => {
     setBlockHide(!blockHide);
   };
-
+// сортування за  категоріями
   const filterCategori = (category) => {
     if (category === "All") {
       setFilteredProducts2(filteredProducts);
@@ -57,11 +59,11 @@ const Search = (props) => {
 
   return (
     <section className="searchBlock container">
-      <div className="blockElem flex">
-        <div className="filter flex">
+      <div className={`${styles.blockElem} ${styles.flex}`}>
+        <div className={`${styles.filter} ${styles.flex}`}>
           <img onClick={togleImg} src="./img/filtr.png" alt="filtr" />
         </div>
-        <div className="search flex">
+        <div className={`${styles.search} ${styles.flex}`}>
           <input
             value={search}
             type="text"
@@ -70,7 +72,7 @@ const Search = (props) => {
           />
           <img src="./img/search.png" alt="search" />
         </div>
-        <div className="cheep flex">
+        <div className={`${styles.cheep} ${styles.flex}`}>
           {state ? (
             <img onClick={sortPrice} src="./img/up.png" alt="up" />
           ) : (
@@ -79,36 +81,36 @@ const Search = (props) => {
         </div>
       </div>
       {blockHide && (
-        <div className="filterPanel">
-          <span className="categori" onClick={() => filterCategori("All")}>
+        <div className={styles.filterPanel}>
+          <span className={styles.categori} onClick={() => filterCategori("All")}>
             All
           </span>
-          <span className="categori" onClick={() => filterCategori("laptops")}>
+          <span className={styles.categori} onClick={() => filterCategori("laptops")}>
             Laptops
           </span>
           <span
-            className="categori"
+            className={styles.categori}
             onClick={() => filterCategori("fragrances")}
           >
             Fragrances
           </span>
-          <span className="categori" onClick={() => filterCategori("skincare")}>
+          <span className={styles.categori} onClick={() => filterCategori("skincare")}>
             Skincare
           </span>
           <span
-            className="categori"
+            className={styles.categori}
             onClick={() => filterCategori("groceries")}
           >
             Groceries
           </span>
           <span
-            className="categori"
+            className={styles.categori}
             onClick={() => filterCategori("home-decoration")}
           >
             Home-decoration
           </span>
           <span
-            className="categori"
+            className={styles.categori}
             onClick={() => filterCategori("smartphones")}
           >
             Smartphones
