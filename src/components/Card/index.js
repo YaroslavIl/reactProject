@@ -1,31 +1,45 @@
-import React, { useState } from 'react';
-import styles from './Card.module.css'
+import React, { useEffect, useState } from "react";
+import styles from "./Card.module.css";
 
 // рендер карток товарів
-const Card = ({ arr, addItem }) => {
+const Card = ({ arr, addItem, removeObj, chekBasketElem }) => {
   const [newArr, setNewArr] = useState(
     arr.map((obj) => ({ ...obj, buy: false }))
   );
-  
-  const onClick = (data,id) => {
-    console.log(data, "3");
-    // console.log(data.id, "4");
-    addItem(data);
-    const updateArr = newArr.map((item) => {
-      if (item.buy === false) {
-        console.log(item.buy, "1");
-        return { ...item, buy: true };
-      } else {
-        console.log(item.buy, "2");
-        return { ...item, buy: false };
+  useEffect(() => {
+    setNewArr(arr.map((obj) => ({ ...obj, buy: false })));
+  }, [arr]);
+  // зміна кольору корзини
+  let start = newArr;
+  const controlBasket = (id) => {
+    start.forEach((item) => {
+      if (item.id === id) {
+        item.buy = !item.buy;
       }
     });
-    
-     setNewArr(updateArr);
   };
-  // setNewArr(newArr);
-  console.log(newArr);
-  return arr.map((obj) => (
+  chekBasketElem(start);
+  const onClick = (data, id, buy) => {
+    // перевірка товару на наявність в корзині  та видалення
+    if (buy) {
+      removeObj(id);
+    } else {
+      addItem(data);
+    }
+    controlBasket(id);
+    // // зміна кольору корзини
+    // let start = newArr;
+    // // auditIcon(start, setNewArr);
+    // start.forEach((item) => {
+    //   if (item.id === id) {
+    //     item.buy = !item.buy;
+    //   }
+    // });
+    // console.log(start, "2222222222222222222222");
+  };
+  // console.log(newArr, "333333333333333333");
+
+  return newArr.map((obj) => (
     <div key={obj.id} className={styles.card}>
       <div>
         <img width={290} height={230} src={obj.images[0]} alt={obj.title} />
@@ -43,7 +57,7 @@ const Card = ({ arr, addItem }) => {
         </div>
         <div>
           <img
-            onClick={() => onClick(obj, obj.id)}
+            onClick={() => onClick(obj, obj.id, obj.buy)}
             className={styles.basket}
             width="30px"
             height="30px"

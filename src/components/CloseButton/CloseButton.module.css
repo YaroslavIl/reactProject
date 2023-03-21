@@ -1,0 +1,31 @@
+
+
+.closeButton {
+    /* border: 1px solid #FF8F52; */
+    width: 20px;
+    height: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.upItem {
+    width: 15px;
+    border: 2px solid #FF8F52;
+    display: block;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 10;
+}
+
+.downItem {
+    width: 15px;
+    border: 2px solid#FF8F52;
+    display: block;
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 10;
+}
