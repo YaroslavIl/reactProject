@@ -27,17 +27,7 @@ const Card = ({ arr, addItem, removeObj, chekBasketElem }) => {
       addItem(data);
     }
     controlBasket(id);
-    // // зміна кольору корзини
-    // let start = newArr;
-    // // auditIcon(start, setNewArr);
-    // start.forEach((item) => {
-    //   if (item.id === id) {
-    //     item.buy = !item.buy;
-    //   }
-    // });
-    // console.log(start, "2222222222222222222222");
   };
-  // console.log(newArr, "333333333333333333");
 
   return newArr.map((obj) => (
     <div key={obj.id} className={styles.card}>

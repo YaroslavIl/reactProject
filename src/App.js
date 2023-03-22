@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Login from "./components/Login";
 import CloseButton from "./components/CloseButton";
+import Register from "./components/Register";
 
 function App() {
   const [mainArr, setMainArr] = useState([]);
@@ -17,7 +18,8 @@ function App() {
   const [showBasket, setShowBasket] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   //==============================
-  const [showLogin, setSHowLogin] = useState(false)
+  const [showLogin, setSHowLogin] = useState(true);
+  const [showRegister, setSHowRegister] = useState(true);
 
   //функція яка приймаж текст з пошуку та масив категорій та сортований по ціні
   const childrenCompSearch = (data, search) => {
@@ -34,18 +36,27 @@ function App() {
     });
     setfinalArray(newArr);
   }, [search, mainArr]);
+
   // Відкриття корзини
   const openBasketButton = () => {
     setShowBasket(true);
   };
+
   // Закривання  корзини
   const closeBasketButton = () => {
     return setShowBasket(false);
-    
   };
+  // Закривання  Login
+  const closeLogin = () => {
+    return setSHowLogin(false);
+  };
+  // Закривання  Register
+  const closeRegister = () => {
+    setSHowRegister(false)
+  }
   //фіксація сторінки при відкритті корзини
   useEffect(() => {
-    if (showBasket) {
+    if (showBasket || showLogin || showRegister) {
       document.body.classList.add("hiden");
     } else {
       document.body.classList.remove("hiden");
@@ -71,19 +82,14 @@ function App() {
 
   return (
     <div className="main">
-      {showLogin && <Login />}
-      {/* <Login /> */}
+      {showRegister && <Register onClick={closeRegister} />}
+      {showLogin && <Login onClick={closeLogin} />}
       <Header openBasket={openBasketButton} numberItem={lengthArr} />
       <section className="basket">
         {showBasket && (
           <div className="basketFon">
             <div className="blockBasket">
-              <CloseButton close={closeBasketButton} />
-              <CloseButton onClick={()=>closeBasketButton()} />
-              {/* <div onClick={closeBasketButton} className="closeButton">
-                <span className="upItem"></span>
-                <span className="downItem"></span>
-              </div> */}
+              <CloseButton onClick={() => closeBasketButton()} />
               <div className="mainCardBasket">
                 {basketArr.map((item) => (
                   <div className="basketCard">

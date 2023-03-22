@@ -3,14 +3,13 @@ import CloseButton from '../CloseButton';
 import styles from './Login.module.css'
 import { useState, useEffect } from "react";
 
-const Login = () => {
-    const [showBasket, setShowBasket] = useState(false);
+const Login = ({onClick}) => {
     return (
       <div className={styles.fonLogin}>
         <div className={styles.blockLogin}>
           <div className={styles.closeLogin}>
             <h2 className={styles.titleLogin}>Login</h2>
-            <CloseButton />
+            <CloseButton onClick={onClick} />
           </div>
           <input type="text" placeholder="Username" />
           <input type="password" placeholder="Password" />
