@@ -6,8 +6,8 @@ import Search from "./components/Search";
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Login from "./components/Login";
-import CloseButton from "./components/CloseButton";
 import Register from "./components/Register";
+import Basked from "./components/Basket";
 
 function App() {
   const [mainArr, setMainArr] = useState([]);
@@ -16,10 +16,9 @@ function App() {
   const [finalArray, setfinalArray] = useState([]);
   const [basketArr, setBasketArr] = useState([]);
   const [showBasket, setShowBasket] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(0);
   //==============================
-  const [showLogin, setSHowLogin] = useState(true);
-  const [showRegister, setSHowRegister] = useState(true);
+  const [showLogin, setSHowLogin] = useState(false);
+  const [showRegister, setSHowRegister] = useState(false);
 
   //функція яка приймаж текст з пошуку та масив категорій та сортований по ціні
   const childrenCompSearch = (data, search) => {
@@ -65,90 +64,16 @@ function App() {
   //Кількість товару в корзині
   const lengthArr = basketArr.length;
 
-  // Видалення товару з корзини
+  // // Видалення товару з корзини
   const removeItem = (itemId) => {
     setBasketArr(basketArr.filter((item) => item.id !== itemId));
   };
-
-  // Сума товарів корзини
-  useEffect(() => {
-    const basketPrice = basketArr.reduce((acc, item) => {
-      return acc + item.price;
-    }, 0);
-    setTotalPrice(basketPrice);
-  }, [basketArr]);
-
-  // console.log(basketArr.map((item)=>item.id), '111111111111111111111111');
-
-  return (
-    <div className="main">
-      {showRegister && <Register onClick={closeRegister} />}
-      {showLogin && <Login onClick={closeLogin} />}
-      <Header openBasket={openBasketButton} numberItem={lengthArr} />
-      <section className="basket">
-        {showBasket && (
-          <div className="basketFon">
-            <div className="blockBasket">
-              <CloseButton onClick={() => closeBasketButton()} />
-              <div className="mainCardBasket">
-                {basketArr.map((item) => (
-                  <div className="basketCard">
-                    <div className="imgBasket">
-                      <img
-                        height={120}
-                        width={120}
-                        src={item.images[0]}
-                        alt={item.title}
-                      />
-                    </div>
-                    <div className="infoBlockBasket">
-                      <div className="basketTitleBLock">
-                        <p className="basketTitle">{item.title}</p>
-                        <div>
-                          <img
-                            onClick={() => removeItem(item.id)}
-                            src="./img/basked.png"
-                            alt="basket"
-                          />
-                        </div>
-                      </div>
-                      <div className="numberBasket"></div>
-                      <span className="basketPrise">{item.price}$</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="price">
-                Price<span className="totalPrice">{totalPrice} $</span>
-              </div>
-            </div>
-          </div>
-        )}
-      </section>
-      <Search childData={childrenCompSearch} />
-      <section className="cardContainer container">
-        <Card
-          arr={finalArray}
-          addItem={(data) => {
-            setBasketArr([...basketArr, data]);
-          }}
-          removeObj={removeItem}
-          chekBasketElem={(argument) => {
-            // x = argument
-            // argument.forEach((item) => {
-            //   if (item.id !== basketArr.forEach((elem) => elem.id)) {
-            //     item.buy = false;
-            //     console.log(item, "$$$$$$$$$$$$$$$$");
-            //     console.log(basketArr, "*****************8");
-            //     console.log(
-            //       basketArr.forEach((elem) => elem.id),
-            //       "##############"
-            //     );
-            //   } else {
-            //     item.buy = true;
-            //   }
-            // });
-
+  // Масив корзини
+  const arrBasket = (data) => {
+    setBasketArr([...basketArr, data]);
+  }
+ // функція перевірки ммасиву карточок та масиву корзини для відображення актуального кольору  корзини на карточках
+  const auditBasketArr=(argument) => {
             argument.forEach((item) => {
               const isInBasket = basketArr.some((elem) => elem.id === item.id);
               if (!isInBasket) {
@@ -156,9 +81,29 @@ function App() {
               } else {
                 item.buy = true;
               }
-            });
-            // console.log(argument);
-          }}
+            })
+          }
+
+
+  
+  return (
+    <div className="main">
+      {showRegister && <Register onClick={closeRegister} />}
+      {showLogin && <Login onClick={closeLogin} />}
+      <Header openBasket={openBasketButton} numberItem={lengthArr} />
+      <Basked
+        close={closeBasketButton}
+        state={showBasket}
+        arrBasket={basketArr}
+        fnBasket={setBasketArr}
+      />
+      <Search childData={childrenCompSearch} />
+      <section className="cardContainer container">
+        <Card
+          arr={finalArray}
+          addItem={arrBasket}
+          removeObj={removeItem}
+          chekBasketElem={auditBasketArr}
         />
       </section>
     </div>

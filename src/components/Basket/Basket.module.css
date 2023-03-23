@@ -1,0 +1,68 @@
+
+
+.basketFon {
+    background-color: rgba(183, 187, 187, 0.712);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.blockBasket {
+    background-color: #FFFFFF;
+    position: absolute;
+    width: 400px;
+    height: 92%;
+    top: 0;
+    right: 0;
+    padding: 30px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+}
+
+.mainCardBasket {
+    flex: 1 1 auto;
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+.basketCard {
+    border: 2px solid #FF8F52;
+    padding: 10px;
+    display: flex;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+
+.infoBlockBasket {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1 1 auto;
+}
+
+.basketTitleBLock {
+    display: flex;
+    justify-content: space-between;
+}
+
+.basketTitleBLock img {
+    cursor: pointer;
+}
+
+.price,
+.basketTitle {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 26px;
+}
+
+.price {
+    display: flex;
+    justify-content: space-between;
+}

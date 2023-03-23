@@ -44,7 +44,6 @@ const Search = (props) => {
       setFilteredProducts2(filteredProducts);
     } else {
       const filterProductsCategory = filteredProducts.filter((item) => {
-        console.log(item.category);
         return item.category === category;
       });
       const sortedProducts = state
