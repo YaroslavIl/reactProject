@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import CloseButton from "../CloseButton";
 import styles from "./Basket.module.css";
 
-const Basked = ({ close, state, arrBasket, fnBasket }) => {
+const Basked = ({ close, state, arrBasket, fnBasket, lengthBasket }) => {
   const [totalPrice, setTotalPrice] = useState(0);
 
   // Видалення товару з корзини
@@ -23,7 +23,7 @@ const Basked = ({ close, state, arrBasket, fnBasket }) => {
     <section className="basket">
       {state && (
         <div className={styles.basketFon}>
-          <div className={styles.blockBasket}>
+          <div className={`${styles.blockBasket} ${lengthBasket === 0 ? styles.fon : ''}`}>
             <CloseButton onClick={() => close()} />
             <div className={styles.mainCardBasket}>
               {arrBasket.map((item) => (

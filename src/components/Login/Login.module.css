@@ -54,6 +54,6 @@
     cursor: pointer;
 }
 .btnLogin:hover{
-    color: #FF8F52;
-    background-color: rgba(209, 154, 125, 0.522);
+    color: #FFFFFF;
+    background-color: #f15b0a;
 }

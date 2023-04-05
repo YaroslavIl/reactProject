@@ -2,15 +2,25 @@ import React, { useEffect, useState } from "react";
 import styles from "./Card.module.css";
 
 // рендер карток товарів
-const Card = ({ arr, addItem, removeObj, chekBasketElem }) => {
+const Card = ({
+  arr,
+  addItem,
+  removeObj,
+  chekBasketElem,
+  loginVerification,
+  showLog,
+}) => {
   const [newArr, setNewArr] = useState(
     arr.map((obj) => ({ ...obj, buy: false }))
   );
+
   useEffect(() => {
     setNewArr(arr.map((obj) => ({ ...obj, buy: false })));
   }, [arr]);
+
   // зміна кольору корзини
   let start = newArr;
+
   const controlBasket = (id) => {
     start.forEach((item) => {
       if (item.id === id) {
@@ -19,14 +29,20 @@ const Card = ({ arr, addItem, removeObj, chekBasketElem }) => {
     });
   };
   chekBasketElem(start);
+
   const onClick = (data, id, buy) => {
-    // перевірка товару на наявність в корзині  та видалення
-    if (buy) {
-      removeObj(id);
+    
+    if (loginVerification !== null) {
+      if (buy) {
+        // перевірка товару на наявність в корзині  та видалення
+        removeObj(id);
+      } else {
+        addItem(data);
+      }
+      controlBasket(id);
     } else {
-      addItem(data);
+      showLog(true)
     }
-    controlBasket(id);
   };
 
   return newArr.map((obj) => (

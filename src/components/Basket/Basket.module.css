@@ -8,8 +8,12 @@
     width: 100%;
     min-height: 100vh;
 }
+.fon{
+    background: url('../../../public/img/big.png') 50% 50% no-repeat;
+}
 
 .blockBasket {
+    
     background-color: #FFFFFF;
     position: absolute;
     width: 400px;

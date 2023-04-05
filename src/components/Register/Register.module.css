@@ -60,6 +60,21 @@
 }
 
 .btnLogin:hover {
-    color: #FF8F52;
-    background-color: rgba(209, 154, 125, 0.522);
+    color: #FFFFFF;
+    background-color: #f15b0a;
+}
+
+.borderRed{
+    border: 1px solid red;
+}
+
+form{
+    display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+        font-size: 20px;
+}
+.success{
+    font-size: 30px;
+    color: green;
 }
