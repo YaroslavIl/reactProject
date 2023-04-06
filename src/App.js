@@ -10,6 +10,7 @@ import Register from "./components/Register";
 import Basked from "./components/Basket";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import UserInfo from "./components/UserInfo";
+import { Link } from "react-router-dom";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
   const [showRegister, setSHowRegister] = useState(false);
   const [users, setUsers] = useState(null);
   const [userIcon, setUserIcon] = useState(false);
+
 
   // Переходи між логіном  та реєстрацією
   const showReg = () => {
@@ -116,6 +118,7 @@ function App() {
   const openUserInfo = () => {
     if (users !== null) {
       setUserIcon(true);
+      <Link to='/UserInfo'></Link>
     } else {
       setSHowLogin(true);
     }
@@ -135,14 +138,15 @@ function App() {
   
 
   
-    // console.log(showLogin);
-    // console.log(showBasket);
-    // console.log(showRegister);
   return (
     <div className="main">
       {showRegister && <Register onClick={closeRegister} showLog={showLog} />}
       {showLogin && (
-        <Login onClick={closeLogin} showReg={showReg} showLog={setSHowLogin} />
+        <Login
+          onClick={closeLogin}
+          showReg={showReg}
+          showLog={setSHowLogin}
+        />
       )}
       <Header
         openBasket={openBasketButton}
@@ -151,7 +155,7 @@ function App() {
         user={users}
         exitUser={exitSys}
       />
-      <UserInfo/>
+      {userIcon && <UserInfo />}
       <Basked
         close={closeBasketButton}
         state={showBasket}

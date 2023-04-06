@@ -1,0 +1,72 @@
+
+
+.blockUserInfo {
+    max-width: 1000px;
+    margin: 0 auto;
+    /* border: 1px solid #000; */
+}
+
+.userInfo {
+    max-width: 600px;
+    margin: 0 auto;
+    /* border: 1px solid #000; */
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.displayName,
+.email,
+.pasword {
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    align-items: center;
+}
+
+img {
+    cursor: pointer;
+}
+
+
+.textBlock {
+    display: flex;
+    justify-content: space-between;
+    flex: 1 1 auto;
+}
+
+.editBlock {
+    display: flex;
+    column-gap: 20px;
+}
+
+.userInfo input {
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #000;
+    background-color: #ebe3e3;
+    font-size: 18px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.userInfo span {
+    font-weight: 700;
+}
+
+.fotoBlock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fotoBlock input {
+    border: none;
+}
+
+.awatar {
+    border-radius: 50%;
+}

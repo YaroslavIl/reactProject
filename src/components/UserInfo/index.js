@@ -1,21 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { getAuth, updateProfile, updateEmail } from "firebase/auth";
-import { getStorage, ref, uploadBytes, getDownloadURL  } from "firebase/storage";
+import {
+  getAuth,
+  updateProfile,
+  updateEmail,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+} from "firebase/auth";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
+import styles from "./UserInfo.module.css";
 
 const UserInfo = () => {
   const [displayName, setDisplayName] = useState("");
   const [showBlockName, setShowBlockName] = useState(false);
-  const [nameValue, steNameValue] = useState("");
-
+  const [nameValue, setNameValue] = useState("");
+  //===========================================NAme
   const [email, setEmail] = useState("");
   const [showBlockEmail, setShowBlockEmail] = useState(false);
   const [emailValue, setEmailValue] = useState("");
+  //===========================================Email
+  const [foto, setFoto] = useState();
+  const [newFoto, setNewFoto] = useState();
+  const [fotoHide, setFotoHide] = useState(true);
+  //===========================================Foto
+  // const [pas, setPas] = useState('')
+  const [showPas, setShowPas] = useState(false);
+  const [pasValue, setPasValue] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
 
-  const [foto, setFoto] = useState()
-  const [newFoto,setNewFoto] = useState()
-  
   // Ініціалізація з'єднання з Firebase Authentication, яка дає змогу  використовувати різні методи для аутентифікації користувачів
   const auth = getAuth();
+
 
   // Ініціалізація хмарного сховища
   const storage = getStorage();
@@ -30,21 +50,15 @@ const UserInfo = () => {
         setDisplayName(user.displayName);
         setEmail(user.email);
         setNewFoto(user.photoURL);
-        const emailVerified = user.emailVerified;
-        // console.log(user);
-
-        const uid = user.uid;
-        // console.log(user.photoURL);
       }
     };
     serverUserInfo();
-  }, []);
+  }, [nameValue, email, newFoto]);
 
 
   // Редагування Імені користувача
-
   const valueName = (e) => {
-    steNameValue(e.target.value);
+    setNameValue(e.target.value);
   };
 
   const showName = () => {
@@ -54,7 +68,6 @@ const UserInfo = () => {
   const showCheckName = () => {
     updateProfile(auth.currentUser, {
       displayName: nameValue,
-      // photoURL:foto,
     })
       .then(() => {
         console.log("editing was successful");
@@ -63,11 +76,11 @@ const UserInfo = () => {
         console.error(error);
       });
     setShowBlockName(false);
-    steNameValue("");
+    setNameValue("");
   };
 
-  //Редагування почти
 
+  //Редагування почти
   const valueEmail = (e) => {
     setEmailValue(e.target.value);
   };
@@ -78,9 +91,6 @@ const UserInfo = () => {
 
   const showCheckEmail = () => {
     updateEmail(auth.currentUser, emailValue)
-    // updateProfile(auth.currentUser, {
-    //   displayName: displayName,
-    // })
       .then(() => {
         console.log("editing mail was successful");
       })
@@ -91,18 +101,27 @@ const UserInfo = () => {
     setEmailValue("");
   };
 
-   // Заміна фото
+
+  // Заміна фото
+  const showFotoChange = () => {
+    setFotoHide(false);
+  };
+
   const fotoValue = (e) => {
     setFoto(e.target.files);
   };
 
-  const imagesRef = ref(storage, 'image');
+  const imagesRef = ref(storage, "image");
 
   const uploadFile = () => {
     return uploadBytes(imagesRef, foto[0]);
-  }
+  };
 
   const fotoChange = async () => {
+    if (foto === undefined) {
+      return setFotoHide(true);
+    }
+    setFotoHide(true);
     try {
       const snapshot = await uploadFile();
       const url = await getDownloadURL(imagesRef);
@@ -115,22 +134,83 @@ const UserInfo = () => {
   };
 
 
+  // Зміна паролю
+  const valuePas = (e) => {
+    setPasValue(e.target.value);
+  };
+
+  const valueCurrentPas = (e) => {
+    setCurrentPassword(e.target.value);
+  };
+
+  const showPass = () => {
+    setShowPas(true);
+  };
+
+  const changePasword = () => {
+
+    if (currentPassword.length === 0 || pasValue.length === 0) {
+      return 
+    }
+    const user = auth.currentUser;
+
+    const credential = EmailAuthProvider.credential(
+      user.email,
+      currentPassword
+    );
+
+    reauthenticateWithCredential(user, credential)
+      .then(() => {
+        updatePassword(user, pasValue)
+          .then(() => {
+            console.log("parol uspih");
+            setShowPas(false);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
-    <div className="blockUserInfo">
-      <div className="userInfo">
-        <div className="fotoBlock">
-          <img width={50} height={50} src={newFoto} alt="avatarka" />
-          <input onChange={(e) => fotoValue(e)} type="file" />
+    <div className={styles.blockUserInfo}>
+      <div className={styles.userInfo}>
+        <div className={styles.fotoBlock}>
           <img
-            onClick={fotoChange}
-            width={25}
-            height={25}
-            src="./img/iconСheck.png"
-            alt="iconСheck"
+            className="awatar"
+            width={70}
+            height={70}
+            src={newFoto}
+            alt="avatarka"
           />
+          {fotoHide !== true && (
+            <div>
+              <input onChange={(e) => fotoValue(e)} type="file" />
+              <img
+                onClick={fotoChange}
+                width={25}
+                height={25}
+                src="./img/iconСheck.png"
+                alt="iconСheck"
+              />
+            </div>
+          )}
+
+          {fotoHide && (
+            <img
+              onClick={showFotoChange}
+              width={25}
+              height={25}
+              src="./img/pencil.png"
+              alt="pencil"
+            />
+          )}
         </div>
-        <div className="displayName">
-          <div className="textBlock">
+        <div className={styles.displayName}>
+          <div className={styles.textBlock}>
             <p>
               <span>Name:</span> {displayName}
             </p>
@@ -145,8 +225,9 @@ const UserInfo = () => {
             )}
           </div>
           {showBlockName && (
-            <div className="editBlock">
+            <div className={styles.editBlock}>
               <input
+                placeholder="Name"
                 value={nameValue}
                 onChange={(e) => valueName(e)}
                 type="text"
@@ -161,8 +242,8 @@ const UserInfo = () => {
             </div>
           )}
         </div>
-        <div className="email">
-          <div className="textBlock">
+        <div className={styles.email}>
+          <div className={styles.textBlock}>
             <p>
               <span>Email:</span> {email}
             </p>
@@ -177,11 +258,12 @@ const UserInfo = () => {
             )}
           </div>
           {showBlockEmail && (
-            <div className="editBlock">
+            <div className={styles.editBlock}>
               <input
+                placeholder="Email"
                 value={emailValue}
                 onChange={(e) => valueEmail(e)}
-                type="text"
+                type="email"
               />
               <img
                 onClick={showCheckEmail}
@@ -191,6 +273,46 @@ const UserInfo = () => {
                 alt="iconCheck"
               />
             </div>
+          )}
+        </div>
+        <div className={styles.pasword}>
+          <div className={styles.textBlock}>
+            <p>
+              <span>Password change:</span>
+            </p>
+            {showPas !== true && (
+              <img
+                onClick={showPass}
+                width={25}
+                height={25}
+                src="./img/pencil.png"
+                alt="pencil"
+              />
+            )}
+          </div>
+          {showPas && (
+            <>
+              <div className={styles.editBlock}>
+                <input
+                  type="password"
+                  placeholder="Current password"
+                  onChange={(e) => valueCurrentPas(e)}
+                />
+                <input
+                  value={pasValue}
+                  onChange={(e) => valuePas(e)}
+                  type="password"
+                  placeholder="New password"
+                />
+                <img
+                  onClick={changePasword}
+                  width={25}
+                  height={25}
+                  src="./img/iconСheck.png"
+                  alt="iconCheck"
+                />
+              </div>
+            </>
           )}
         </div>
       </div>

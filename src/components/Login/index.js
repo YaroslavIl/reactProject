@@ -34,15 +34,13 @@ const Login = ({ onClick, showReg, showLog }) => {
     try {
       let loginResponse = await signInUser(email, password);
       startSession(loginResponse.user);
-      showLog(false)
+      showLog(false);
     } catch (error) {
       console.error(error.message);
       setError(error.message);
     }
     console.log("Logging in...");
   };
-
-
 
   return (
     <div className={styles.fonLogin}>
