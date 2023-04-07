@@ -44,7 +44,6 @@ const UserInfo = () => {
   // Доступ до данних користувача на сервері
   useEffect(() => {
     const serverUserInfo = () => {
-      const auth = getAuth();
       const user = auth.currentUser;
       if (user !== null) {
         setDisplayName(user.displayName);
@@ -53,7 +52,7 @@ const UserInfo = () => {
       }
     };
     serverUserInfo();
-  }, [nameValue, email, newFoto]);
+  }, []);
 
 
   // Редагування Імені користувача
@@ -71,6 +70,7 @@ const UserInfo = () => {
     })
       .then(() => {
         console.log("editing was successful");
+        setDisplayName(nameValue);
       })
       .catch((error) => {
         console.error(error);
@@ -93,6 +93,7 @@ const UserInfo = () => {
     updateEmail(auth.currentUser, emailValue)
       .then(() => {
         console.log("editing mail was successful");
+        setEmail(emailValue);
       })
       .catch((error) => {
         console.error(error);
@@ -128,6 +129,7 @@ const UserInfo = () => {
       const changeFotoProfile = await updateProfile(auth.currentUser, {
         photoURL: url,
       });
+      setNewFoto(url);
     } catch (error) {
       console.error(error);
     }
