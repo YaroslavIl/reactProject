@@ -14,6 +14,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import styles from "./UserInfo.module.css";
+import Header from '../Header';
 
 const UserInfo = () => {
   const [displayName, setDisplayName] = useState("");
@@ -52,7 +53,7 @@ const UserInfo = () => {
       }
     };
     serverUserInfo();
-  }, []);
+  });
 
 
   // Редагування Імені користувача
@@ -178,47 +179,34 @@ const UserInfo = () => {
   };
 
   return (
-    <div className={styles.blockUserInfo}>
-      <div className={styles.userInfo}>
-        <div className={styles.fotoBlock}>
-          <img
-            className="awatar"
-            width={70}
-            height={70}
-            src={newFoto}
-            alt="avatarka"
-          />
-          {fotoHide !== true && (
-            <div>
-              <input onChange={(e) => fotoValue(e)} type="file" />
-              <img
-                onClick={fotoChange}
-                width={25}
-                height={25}
-                src="./img/iconСheck.png"
-                alt="iconСheck"
-              />
-            </div>
-          )}
-
-          {fotoHide && (
+    <>
+      <Header />
+      <div className={styles.blockUserInfo}>
+        <div className={styles.userInfo}>
+          <div className={styles.fotoBlock}>
             <img
-              onClick={showFotoChange}
-              width={25}
-              height={25}
-              src="./img/pencil.png"
-              alt="pencil"
+              className={styles.awatar}
+              width={70}
+              height={70}
+              src={newFoto}
+              alt="avatarka"
             />
-          )}
-        </div>
-        <div className={styles.displayName}>
-          <div className={styles.textBlock}>
-            <p>
-              <span>Name:</span> {displayName}
-            </p>
-            {showBlockName !== true && (
+            {fotoHide !== true && (
+              <div>
+                <input onChange={(e) => fotoValue(e)} type="file" />
+                <img
+                  onClick={fotoChange}
+                  width={25}
+                  height={25}
+                  src="./img/iconСheck.png"
+                  alt="iconСheck"
+                />
+              </div>
+            )}
+
+            {fotoHide && (
               <img
-                onClick={showName}
+                onClick={showFotoChange}
                 width={25}
                 height={25}
                 src="./img/pencil.png"
@@ -226,99 +214,115 @@ const UserInfo = () => {
               />
             )}
           </div>
-          {showBlockName && (
-            <div className={styles.editBlock}>
-              <input
-                placeholder="Name"
-                value={nameValue}
-                onChange={(e) => valueName(e)}
-                type="text"
-              />
-              <img
-                onClick={showCheckName}
-                width={25}
-                height={25}
-                src="./img/iconСheck.png"
-                alt="iconCheck"
-              />
+          <div className={styles.displayName}>
+            <div className={styles.textBlock}>
+              <p>
+                <span>Name:</span> {displayName}
+              </p>
+              {showBlockName !== true && (
+                <img
+                  onClick={showName}
+                  width={25}
+                  height={25}
+                  src="./img/pencil.png"
+                  alt="pencil"
+                />
+              )}
             </div>
-          )}
-        </div>
-        <div className={styles.email}>
-          <div className={styles.textBlock}>
-            <p>
-              <span>Email:</span> {email}
-            </p>
-            {showBlockEmail !== true && (
-              <img
-                onClick={showEmail}
-                width={25}
-                height={25}
-                src="./img/pencil.png"
-                alt="pencil"
-              />
-            )}
-          </div>
-          {showBlockEmail && (
-            <div className={styles.editBlock}>
-              <input
-                placeholder="Email"
-                value={emailValue}
-                onChange={(e) => valueEmail(e)}
-                type="email"
-              />
-              <img
-                onClick={showCheckEmail}
-                width={25}
-                height={25}
-                src="./img/iconСheck.png"
-                alt="iconCheck"
-              />
-            </div>
-          )}
-        </div>
-        <div className={styles.pasword}>
-          <div className={styles.textBlock}>
-            <p>
-              <span>Password change:</span>
-            </p>
-            {showPas !== true && (
-              <img
-                onClick={showPass}
-                width={25}
-                height={25}
-                src="./img/pencil.png"
-                alt="pencil"
-              />
-            )}
-          </div>
-          {showPas && (
-            <>
+            {showBlockName && (
               <div className={styles.editBlock}>
                 <input
-                  type="password"
-                  placeholder="Current password"
-                  onChange={(e) => valueCurrentPas(e)}
-                />
-                <input
-                  value={pasValue}
-                  onChange={(e) => valuePas(e)}
-                  type="password"
-                  placeholder="New password"
+                  placeholder="Name"
+                  value={nameValue}
+                  onChange={(e) => valueName(e)}
+                  type="text"
                 />
                 <img
-                  onClick={changePasword}
+                  onClick={showCheckName}
                   width={25}
                   height={25}
                   src="./img/iconСheck.png"
                   alt="iconCheck"
                 />
               </div>
-            </>
-          )}
+            )}
+          </div>
+          <div className={styles.email}>
+            <div className={styles.textBlock}>
+              <p>
+                <span>Email:</span> {email}
+              </p>
+              {showBlockEmail !== true && (
+                <img
+                  onClick={showEmail}
+                  width={25}
+                  height={25}
+                  src="./img/pencil.png"
+                  alt="pencil"
+                />
+              )}
+            </div>
+            {showBlockEmail && (
+              <div className={styles.editBlock}>
+                <input
+                  placeholder="Email"
+                  value={emailValue}
+                  onChange={(e) => valueEmail(e)}
+                  type="email"
+                />
+                <img
+                  onClick={showCheckEmail}
+                  width={25}
+                  height={25}
+                  src="./img/iconСheck.png"
+                  alt="iconCheck"
+                />
+              </div>
+            )}
+          </div>
+          <div className={styles.pasword}>
+            <div className={styles.textBlock}>
+              <p>
+                <span>Password change:</span>
+              </p>
+              {showPas !== true && (
+                <img
+                  onClick={showPass}
+                  width={25}
+                  height={25}
+                  src="./img/pencil.png"
+                  alt="pencil"
+                />
+              )}
+            </div>
+            {showPas && (
+              <>
+                <div className={styles.editBlock}>
+                  <input
+                    type="password"
+                    placeholder="Current password"
+                    onChange={(e) => valueCurrentPas(e)}
+                  />
+                  <input
+                    value={pasValue}
+                    onChange={(e) => valuePas(e)}
+                    type="password"
+                    placeholder="New password"
+                  />
+                  <img
+                    onClick={changePasword}
+                    width={25}
+                    height={25}
+                    src="./img/iconСheck.png"
+                    alt="iconCheck"
+                  />
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

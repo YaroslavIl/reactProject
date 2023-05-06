@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from "./Header.module.css";
+import { Link } from 'react-router-dom';
 
 const Header = ({ openBasket, numberItem, openUser, user, exitUser }) => {
   return (
@@ -16,9 +17,9 @@ const Header = ({ openBasket, numberItem, openUser, user, exitUser }) => {
               </a>
             </li>
             <li>
-              <a className={styles.headerLink} href="">
+              <Link className={styles.headerLink} to={"/shop"}>
                 Shop
-              </a>
+              </Link>
             </li>
             <li>
               <a className={styles.headerLink} href="">
@@ -34,13 +35,15 @@ const Header = ({ openBasket, numberItem, openUser, user, exitUser }) => {
         </div>
         <div className={`${styles.headerIcon} ${styles.flex}`}>
           <div>
-            <img
-              onClick={openUser}
-              width={25}
-              height={30}
-              src="./img/user.png"
-              alt="user"
-            />
+            <Link to={"/main"} onClick={openUser}>
+              <img
+                // onClick={openUser}
+                width={25}
+                height={30}
+                src="./img/user.png"
+                alt="user"
+              />
+            </Link>
           </div>
           {user !== null && (
             <div>
