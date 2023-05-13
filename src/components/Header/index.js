@@ -1,8 +1,24 @@
 import React from 'react';
 import styles from "./Header.module.css";
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import {getAuth, signOut} from "firebase/auth";
 
-const Header = ({ openBasket, numberItem, openUser, user, exitUser }) => {
+const Header = ({ openBasket, numberItem, openUser, user }) => {
+  const nav = useNavigate()
+  const exitSys = () => {
+
+    const auth = getAuth();
+    signOut(auth)
+        .then(() => {
+
+          nav("/shop")
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  };
+
+
   return (
     <section className={styles.headerFon}>
       <div className={`${styles.header} ${styles.container} ${styles.flex}`}>
@@ -12,16 +28,16 @@ const Header = ({ openBasket, numberItem, openUser, user, exitUser }) => {
         <div className={styles.headerMenu}>
           <ul className={styles.flex}>
             <li>
-              <a className={styles.headerLink} href="">
+              <Link className={styles.headerLink}  to={"/home"}>
                 Home
-              </a>
+              </Link>
             </li>
             <li>
               <Link className={styles.headerLink} to={"/shop"}>
                 Shop
               </Link>
             </li>
-            <li>
+            {/* <li>
               <a className={styles.headerLink} href="">
                 Blog
               </a>
@@ -30,25 +46,22 @@ const Header = ({ openBasket, numberItem, openUser, user, exitUser }) => {
               <a className={styles.headerLink} href="">
                 About
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className={`${styles.headerIcon} ${styles.flex}`}>
           <div>
-            <Link to={"/main"} onClick={openUser}>
-              <img
-                // onClick={openUser}
+              <img onClick={openUser}
                 width={25}
                 height={30}
                 src="./img/user.png"
                 alt="user"
               />
-            </Link>
           </div>
           {user !== null && (
             <div>
               <img
-                onClick={exitUser}
+                onClick={exitSys}
                 width={32}
                 height={30}
                 src="./img/exid.png"

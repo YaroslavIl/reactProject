@@ -122,7 +122,8 @@ const Register = ({ onClick, showLog }) => {
       <div className={styles.blockLogin}>
         <div className={styles.closeLogin}>
           <h2 className={styles.titleLogin}>Register</h2>
-          <CloseButton onClick={onClick} />
+          <Link to={'/shop'}><CloseButton onClick={onClick} /></Link>
+          
         </div>
         {hide ? (
           <h2 className={styles.success}>Successful registration</h2>
@@ -180,7 +181,7 @@ const Register = ({ onClick, showLog }) => {
         )}
         <p className={styles.textLogin}>
           dont have an account?
-          <Link onClick={showLog} className={styles.linkLogin} to="/Login">
+          <Link onClick={showLog} className={styles.linkLogin} to="/login">
             Login
           </Link>
         </p>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Sliderr.module.css";
+import {Link, NavLink} from "react-router-dom";
 
 
 const Sliderr = () => {
@@ -52,7 +53,9 @@ const Sliderr = () => {
         onMouseEnter={toggleExpand}
         onMouseLeave={toggleExpand}
       >
-        <span>GO SHOP</span>
+        <Link to={"/shop"} className={styles.span}>
+          GO SHOP
+        </Link>
       </div>
       <div className={styles.sliderWrapper}>
         <div
@@ -60,7 +63,7 @@ const Sliderr = () => {
           style={{
             backgroundImage: `url(./img/${currentSlide + 1}.jpg)`,
             backgroundSize: "cover",
-            transition: "background-image 2s ease",
+            transition: "background-image 2s ease-in-out",
           }}
         ></div>
       </div>

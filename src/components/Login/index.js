@@ -12,6 +12,7 @@ const Login = ({ onClick, showReg, showLog }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(true);
+  const navigate = useNavigate()
 
   const emailValue = (e) => {
     setEmail(e.target.value);
@@ -67,7 +68,7 @@ const Login = ({ onClick, showReg, showLog }) => {
         </form>
         <p className={styles.textLogin}>
           dont have an account?
-          <Link className={styles.linkLogin} onClick={showReg} to="/register">
+          <Link className={styles.linkLogin}  to="/register">
             Register
           </Link>
         </p>

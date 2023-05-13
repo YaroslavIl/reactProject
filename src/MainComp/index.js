@@ -7,8 +7,8 @@ import Login from "../components/Login";
 import Register from "../components/Register";
 import Basked from "../components/Basket";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import UserInfo from "../components/UserInfo";
-import Sliderr from "../components/Sliderr";
+import {useNavigate} from "react-router-dom";
+import Footer from "../components/Footer";
 
 const MainComp = () => {
   // карточки то пошук
@@ -23,6 +23,8 @@ const MainComp = () => {
   const [showRegister, setSHowRegister] = useState(false);
   const [users, setUsers] = useState(null);
   const [userIcon, setUserIcon] = useState(false);
+
+  const navigator = useNavigate()
 
   // Переходи між логіном  та реєстрацією
   const showReg = () => {
@@ -118,13 +120,13 @@ const MainComp = () => {
   const openUserInfo = () => {
     if (users !== null) {
       setUserIcon(true);
-      console.log('1');
+      console.log('11');
+      navigator("/main");
     } else {
-      console.log(showLogin);
       setSHowLogin(true);
        localStorage.setItem("showLogin", true);
       console.log('2');
-      console.log(showLogin);
+
     }
   };
 
@@ -142,7 +144,6 @@ const MainComp = () => {
 
   return (
     <div className="main">
-      <Sliderr/>
       {showRegister && <Register onClick={closeRegister} showLog={showLog} />}
       {showLogin && (
         <Login onClick={closeLogin} showReg={showReg} showLog={setSHowLogin} />
@@ -152,9 +153,8 @@ const MainComp = () => {
         numberItem={lengthArr}
         openUser={openUserInfo}
         user={users}
-        exitUser={exitSys}
       />
-      {userIcon && <UserInfo />}
+      {/*{userIcon && <UserInfo />}*/}
       <Basked
         close={closeBasketButton}
         state={showBasket}
@@ -173,6 +173,7 @@ const MainComp = () => {
           showLog={setSHowLogin}
         />
       </section>
+      <Footer/>
     </div>
   );
 };

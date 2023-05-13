@@ -43,7 +43,7 @@
     }
 }
 
-.button span {
+.button .span {
     display: none;
     margin-left: 10px;
 }
@@ -56,7 +56,7 @@
     background-color: #fff;
 }
 
-.button.expanded span {
+.button.expanded .span {
     display: inline;
 }
 
@@ -100,4 +100,9 @@
 .indicator.active {
     /* background-color: #555; */
     background-color: #fafafa;
+}
+
+a{
+    text-decoration: none;
+    color: black;
 }

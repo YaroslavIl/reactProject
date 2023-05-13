@@ -15,6 +15,7 @@ import {
 } from "firebase/storage";
 import styles from "./UserInfo.module.css";
 import Header from '../Header';
+import Footer from '../Footer';
 
 const UserInfo = () => {
   const [displayName, setDisplayName] = useState("");
@@ -153,7 +154,7 @@ const UserInfo = () => {
   const changePasword = () => {
 
     if (currentPassword.length === 0 || pasValue.length === 0) {
-      return 
+      return setShowPas(false);
     }
     const user = auth.currentUser;
 
@@ -179,7 +180,7 @@ const UserInfo = () => {
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <Header />
       <div className={styles.blockUserInfo}>
         <div className={styles.userInfo}>
@@ -322,7 +323,8 @@ const UserInfo = () => {
           </div>
         </div>
       </div>
-    </>
+      <Footer className={styles.Footer} />
+    </div>
   );
 };
 
