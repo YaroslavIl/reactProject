@@ -9,20 +9,13 @@ const Sliderr = () => {
   // Стан для кнопки
   const [isExpanded, setIsExpanded] = useState(false);
 
+  // Стан для зберігання таймеру
+  const [timer, setTimer] = useState(null);
+
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
-  // Стан для зберігання таймеру
-  const [timer, setTimer] = useState(null);
-
-  useEffect(() => {
-    // Запускаємо таймер при монтуванні компонента
-    startTimer();
-
-    // Зупиняємо таймер при демонтажі компонента
-    return () => clearInterval(timer);
-  }, [currentSlide]);
 
   const startTimer = () => {
     // Встановлюємо інтервал для таймеру
@@ -40,6 +33,14 @@ const Sliderr = () => {
     // Зберігаємо інтервал таймера в стані
     setTimer(interval);
   };
+
+  useEffect(() => {
+    // Запускаємо таймер при монтуванні компонента
+    startTimer();
+
+    // Зупиняємо таймер при демонтажі компонента
+    return () => clearInterval(timer);
+  }, [currentSlide]);
 
   // Обробник події, який викликається при кліку на індикатор слайду
   const handleIndicatorClick = (index) => {

@@ -19,7 +19,7 @@ const MainComp = () => {
   const [basketArr, setBasketArr] = useState([]);
   const [showBasket, setShowBasket] = useState(false);
   // Логін та Реєстрація
-  // const [showLogin, setSHowLogin] = useState(false);
+  const [showLogin, setSHowLogin] = useState(false);
   const [showRegister, setSHowRegister] = useState(false);
   const [users, setUsers] = useState(null);
   // const [userIcon, setUserIcon] = useState(false);
@@ -80,7 +80,7 @@ const MainComp = () => {
     } else {
       document.body.classList.remove("hiden");
     }
-  }, [showBasket]);
+  }, [showBasket, showLogin, showRegister]);
   //Кількість товару в корзині
   const lengthArr = basketArr.length;
 
@@ -114,7 +114,7 @@ const MainComp = () => {
     return unsubscribe;
   }, []);
 
-  const [showLogin, setSHowLogin] = useState(false);
+  // const [showLogin, setSHowLogin] = useState(false);
  
   // відкриття сторінки з інфо про користувача
   const openUserInfo = () => {
@@ -127,17 +127,6 @@ const MainComp = () => {
     }
   };
 
-  //Вихід із системи
-  const exitSys = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        // console.log(auth, 'CurentUser');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   return (
     <div className="main">

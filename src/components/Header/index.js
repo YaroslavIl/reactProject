@@ -4,20 +4,18 @@ import {Link, useNavigate} from 'react-router-dom';
 import {getAuth, signOut} from "firebase/auth";
 
 const Header = ({ openBasket, numberItem, openUser, user }) => {
-  const nav = useNavigate()
+  const nav = useNavigate();
+  //Вихід із системи
   const exitSys = () => {
-
     const auth = getAuth();
     signOut(auth)
-        .then(() => {
-
-          nav("/shop")
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      .then(() => {
+        nav("/shop");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-
 
   return (
     <section className={styles.headerFon}>
@@ -28,7 +26,7 @@ const Header = ({ openBasket, numberItem, openUser, user }) => {
         <div className={styles.headerMenu}>
           <ul className={styles.flex}>
             <li>
-              <Link className={styles.headerLink}  to={"/home"}>
+              <Link className={styles.headerLink} to={"/home"}>
                 Home
               </Link>
             </li>
@@ -37,26 +35,17 @@ const Header = ({ openBasket, numberItem, openUser, user }) => {
                 Shop
               </Link>
             </li>
-            {/* <li>
-              <a className={styles.headerLink} href="">
-                Blog
-              </a>
-            </li>
-            <li>
-              <a className={styles.headerLink} href="">
-                About
-              </a>
-            </li> */}
           </ul>
         </div>
         <div className={`${styles.headerIcon} ${styles.flex}`}>
           <div>
-              <img onClick={openUser}
-                width={25}
-                height={30}
-                src="./img/user.png"
-                alt="user"
-              />
+            <img
+              onClick={openUser}
+              width={25}
+              height={30}
+              src="./img/user.png"
+              alt="user"
+            />
           </div>
           {user !== null && (
             <div>

@@ -56,6 +56,9 @@ const Register = ({ onClick, showLog }) => {
       case "repeatPassword":
         setRepeatPasswordCheck(true);
         break;
+      default:
+        console.log('======');
+        break;
     }
   };
 
