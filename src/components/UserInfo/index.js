@@ -126,9 +126,9 @@ const UserInfo = () => {
     }
     setFotoHide(true);
     try {
-      const snapshot = await uploadFile();
+      await uploadFile();
       const url = await getDownloadURL(imagesRef);
-      const changeFotoProfile = await updateProfile(auth.currentUser, {
+      await updateProfile(auth.currentUser, {
         photoURL: url,
       });
       setNewFoto(url);

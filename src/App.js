@@ -1,9 +1,8 @@
 
 import "./App.css";
 import MainComp from "./MainComp";
-import { Routes, Route, useSearchParams } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import UserInfo from "./components/UserInfo";
-import { useState } from "react";
 import Sliderr from "./components/Sliderr";
 import Register from "./components/Register";
 import Login from "./components/Login";

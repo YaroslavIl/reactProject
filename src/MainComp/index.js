@@ -22,7 +22,7 @@ const MainComp = () => {
   // const [showLogin, setSHowLogin] = useState(false);
   const [showRegister, setSHowRegister] = useState(false);
   const [users, setUsers] = useState(null);
-  const [userIcon, setUserIcon] = useState(false);
+  // const [userIcon, setUserIcon] = useState(false);
 
   const navigator = useNavigate()
 
@@ -119,14 +119,11 @@ const MainComp = () => {
   // відкриття сторінки з інфо про користувача
   const openUserInfo = () => {
     if (users !== null) {
-      setUserIcon(true);
-      console.log('11');
+      // setUserIcon(true);
       navigator("/main");
     } else {
       setSHowLogin(true);
        localStorage.setItem("showLogin", true);
-      console.log('2');
-
     }
   };
 

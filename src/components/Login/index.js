@@ -1,10 +1,10 @@
 import React from 'react';
 import CloseButton from '../CloseButton';
 import styles from './Login.module.css'
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { signInUser } from '../../firebaseTEsT';
 import { startSession } from '../../session';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const Login = ({ onClick, showReg, showLog }) => {
@@ -12,7 +12,7 @@ const Login = ({ onClick, showReg, showLog }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(true);
-  const navigate = useNavigate()
+  
 
   const emailValue = (e) => {
     setEmail(e.target.value);

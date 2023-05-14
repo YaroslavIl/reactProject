@@ -1,6 +1,6 @@
 
 import { initializeApp } from "firebase/app";
-import { getStorage } from 'firebase/storage'
+// import { getStorage } from 'firebase/storage'
 
 
 import {
@@ -22,7 +22,7 @@ const firebaseConfig = {
 // Запуск Firebase
 const app = initializeApp(firebaseConfig);
 // Хмарне сховище
-const storage =getStorage(app)
+// const storage =getStorage(app)
 
   // Створення нового користувача
   export const createUser = async (name, email, password) => {

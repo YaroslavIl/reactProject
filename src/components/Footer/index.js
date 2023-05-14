@@ -1,9 +1,8 @@
 import React from 'react';
 import styles from './Footer.module.css';
-import { useState } from 'react';
 
 const Footer = () => {
-    const [currentDate, setCurrentDate] = useState(new Date());
+  const currentDate = new Date();
     return (
       <div className={styles.footer}>
         <div style={{ color: "cornsilk" }}>

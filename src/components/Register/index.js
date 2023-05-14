@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import "firebase/compat/auth";
 import { createUser } from "../../firebaseTEsT";
 import { startSession } from "../../session";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const Register = ({ onClick, showLog }) => {
